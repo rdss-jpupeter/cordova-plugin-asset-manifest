@@ -1,0 +1,46 @@
+ext.cdvPluginPostBuildExtras = {
+    println("+-----------------------------------------------------------------");
+    println("| Create cdvasset.manifest");
+    println("+-----------------------------------------------------------------");
+    def inAssetsDir = file("src/main/assets")
+    if (!inAssetsDir.exists()) { // Add support for cordova-android < 7.0.0
+        inAssetsDir = file("assets")
+    }
+
+    def outAssetsDir = inAssetsDir
+    def outFile = new File(outAssetsDir, "cdvasset.manifest")
+
+    def newTask = task("cdvCreateAssetManifest") << {
+        def contents = new HashMap()
+        def sizes = new HashMap()
+        contents[""] = inAssetsDir.list()
+        def tree = fileTree(dir: inAssetsDir)
+        tree.visit { fileDetails ->
+            if (fileDetails.isDirectory()) {
+                contents[fileDetails.relativePath.toString()] = fileDetails.file.list()
+            } else {
+                sizes[fileDetails.relativePath.toString()] = fileDetails.file.length()
+            }
+        }
+
+        outAssetsDir.mkdirs()
+        outFile.withObjectOutputStream { oos ->
+            oos.writeObject(contents)
+            oos.writeObject(sizes)
+        }
+    }
+    newTask.inputs.dir inAssetsDir
+    newTask.outputs.file outFile
+    def preBuildTask = tasks["preBuild"]
+    preBuildTask.dependsOn(newTask)
+}
+
+android.buildTypes.each {
+   // to prevent incorrect long value restoration from strings.xml we need to wrap it with double quotes
+   // https://github.com/Microsoft/cordova-plugin-code-push/issues/264
+   it.resValue "string", "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
+}
+
+dependencies {
+    compile 'com.nimbusds:nimbus-jose-jwt:5.1'
+}

@@ -1,0 +1,19 @@
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+xmlns:android="http://schemas.android.com/apk/res/android"
+           id="cordova-plugin-asset-manifest"
+      version="1.0.0">
+
+    <name>cordova-plugin-asset-manifest</name>
+    <description>Cordova plugin to create the cdvasset.manifest File</description>
+    <license>MIT</license>
+    <keywords>cordova</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.5.0"/>
+    </engines>
+
+    <platform name="android">
+        <framework src="cordova-plugin-asset-manifest.gradle" custom="true" type="gradleReference" />
+    </platform>
+
+</plugin>
