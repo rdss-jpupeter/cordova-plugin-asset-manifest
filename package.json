@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-asset-manifest",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cordova plugin to create the cdvasset.manifest File",
   "cordova": {
     "id": "cordova-plugin-asset-manifest",
