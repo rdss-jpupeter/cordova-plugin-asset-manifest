@@ -5,3 +5,9 @@ Solves the problem if multiple plugins use postBuildExtras and the manifest file
 I developed the plugin because of the following problem with the code push plugin from Microsoft:
 
 '[CodePush] Could not get binary hash.Error: Could not get binary hash.'
+
+# Installation
+
+```
+cordova plugin add cordova-plugin-asset-manifest
+```
