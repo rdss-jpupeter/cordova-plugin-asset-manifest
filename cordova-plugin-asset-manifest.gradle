@@ -1,7 +1,4 @@
-ext.cdvPluginPostBuildExtras = {
-    println("+-----------------------------------------------------------------");
-    println("| Create cdvasset.manifest");
-    println("+-----------------------------------------------------------------");
+cdvPluginPostBuildExtras.add({
     def inAssetsDir = file("src/main/assets")
     if (!inAssetsDir.exists()) { // Add support for cordova-android < 7.0.0
         inAssetsDir = file("assets")
@@ -33,7 +30,7 @@ ext.cdvPluginPostBuildExtras = {
     newTask.outputs.file outFile
     def preBuildTask = tasks["preBuild"]
     preBuildTask.dependsOn(newTask)
-}
+})
 
 android.buildTypes.each {
    // to prevent incorrect long value restoration from strings.xml we need to wrap it with double quotes
